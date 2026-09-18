@@ -68,8 +68,8 @@ export function SiteHeader() {
         aria-modal="true"
         aria-label="Menu"
         inert={!menuOpen}
-        className={`fixed inset-x-0 bottom-0 z-30 flex flex-col gap-10 bg-accent px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] text-paper transition-transform max-sm:gap-8 max-sm:px-2 max-sm:pt-2 ${easing} ${
-          menuOpen ? "translate-y-0" : "translate-y-full"
+        className={`fixed inset-x-0 bottom-0 z-30 flex flex-col gap-10 bg-accent px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] text-paper transition-[translate,visibility] max-sm:gap-8 max-sm:px-2 max-sm:pt-2 ${easing} ${
+          menuOpen ? "visible translate-y-0" : "invisible translate-y-full"
         }`}
       >
         <div className="flex items-center justify-between uppercase">
@@ -99,8 +99,8 @@ export function SiteHeader() {
 
       <div
         inert={!drawerOpen}
-        className={`fixed top-0 right-0 z-20 h-full w-[calc(50%+.75rem)] overflow-y-scroll bg-accent text-paper transition-transform max-lg:w-full ${easing} ${
-          drawerOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 right-0 z-20 h-full w-[calc(50%+.75rem)] overflow-y-scroll bg-accent text-paper transition-[translate,visibility] max-lg:w-full ${easing} ${
+          drawerOpen ? "visible translate-x-0" : "invisible translate-x-full"
         }`}
       >
         <div className={barClasses}>
