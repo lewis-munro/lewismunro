@@ -1,26 +1,90 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: var(--font-archivo), sans-serif;
+
+  --color-paper: #f1eee7;
+  --color-ink: #141414;
+  --color-accent: #2b3cf5;
+
+  --text-md: 2rem;
+  --text-md--line-height: 0.9;
+  --text-md--letter-spacing: -0.015em;
+  --text-lg: 3.25rem;
+  --text-lg--line-height: 1.2;
+  --text-lg--letter-spacing: -0.04em;
+  --text-2xl-md: 1.8rem;
+  --text-2xl-md--line-height: 0.9;
+  --text-2xl-md--letter-spacing: -0.015em;
+  --text-2xl-lg: 2.925rem;
+  --text-2xl-lg--line-height: 1.2;
+  --text-2xl-lg--letter-spacing: -0.04em;
+  --text-sm-md: 1.5rem;
+  --text-sm-md--line-height: 0.9;
+  --text-sm-md--letter-spacing: -0.015em;
+  --text-sm-lg: 2.25rem;
+  --text-sm-lg--line-height: 1.2;
+  --text-sm-lg--letter-spacing: -0.04em;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@utility font-chroma {
+  font-family: var(--font-archivo), sans-serif;
+  font-stretch: 125%;
+  font-weight: 800;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --header-height: 4.15rem;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @media (max-width: 1536px) {
+    :root {
+      --header-height: 3.76rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    :root {
+      --header-height: 2.95rem;
+    }
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "case" on;
+    font-variant-numeric: tabular-nums;
+  }
+
+  html {
+    font-family: var(--font-archivo), sans-serif;
+  }
+
+  body {
+    font-family: var(--font-archivo), sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-stretch: 100%;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    color: var(--color-ink);
+    background: var(--color-paper);
+  }
+
+  @media (max-width: 1536px) {
+    body {
+      font-size: 0.7308rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    body {
+      font-size: 0.7rem;
+    }
+  }
 }
