@@ -19,7 +19,7 @@ export function Hero() {
       />
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 uppercase max-sm:gap-2 max-sm:p-2">
         <p>Fashion Stylist &amp; Consultant</p>
-        <p className="text-right">London, Working Internationally</p>
+        <p className="text-right">London</p>
       </div>
     </section>
   );
