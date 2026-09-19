@@ -5,12 +5,6 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  {
-    files: ["app/_hooks/useMountEffect.ts"],
-    rules: {
-      "react-hooks/exhaustive-deps": "off",
-    },
-  },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", "reference/**"]),
 ]);
 
