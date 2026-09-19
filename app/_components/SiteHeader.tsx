@@ -1,13 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { site } from "../_data/site";
+import {
+  isHeroLogoOutOfView,
+  isHeroLogoOutOfViewOnServer,
+  subscribeToHeroLogo,
+} from "../_lib/heroLogoVisibility";
 import { MenuIcon } from "./Icons";
 import { PanelContent, panelTitles, type PanelName } from "./PanelContent";
 
-const barClasses =
-  "sticky top-0 z-10 flex w-full items-center justify-between gap-4 px-4 pt-1 font-chroma text-lg uppercase max-2xl:text-2xl-lg max-sm:gap-2 max-sm:px-2 max-sm:text-sm-lg";
+const barLayout =
+  "flex h-(--header-height) w-full items-center gap-4 px-4 pt-1 font-chroma text-lg uppercase max-2xl:text-2xl-lg max-sm:gap-2 max-sm:px-2 max-sm:text-sm-lg";
+
+const barClasses = `sticky top-0 z-10 justify-between ${barLayout}`;
 
 const easing = "duration-500 ease-[cubic-bezier(.4,0,.2,1)]";
 
@@ -22,6 +30,7 @@ export function SiteHeader() {
   const [panel, setPanel] = useState<PanelName>("bio");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const showLogo = useSyncExternalStore(subscribeToHeroLogo, isHeroLogoOutOfView, isHeroLogoOutOfViewOnServer);
 
   const openPanel = (name: PanelName) => {
     setPanel(name);
@@ -31,10 +40,29 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className={`${barClasses} text-white mix-blend-exclusion`}>
-        <Link href="/" aria-current="page" className="whitespace-nowrap">
-          {site.name}
+      <div className={`pointer-events-none fixed top-0 left-0 z-10 w-auto ${barLayout}`}>
+        <Link
+          href="/"
+          aria-current="page"
+          aria-hidden={!showLogo}
+          tabIndex={showLogo ? 0 : -1}
+          className={`flex transition-[opacity,translate,visibility] ${easing} ${
+            showLogo ? "pointer-events-auto visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
+          }`}
+        >
+          <Image
+            src="/Lewis-Munro-Signature.gif"
+            alt={site.name}
+            width={800}
+            height={150}
+            unoptimized
+            draggable={false}
+            className="h-[.8em] w-auto select-none"
+          />
         </Link>
+      </div>
+
+      <header className={`sticky top-0 z-10 justify-end text-white mix-blend-exclusion ${barLayout}`}>
         <nav>
           <ul className="flex items-center gap-4 max-sm:gap-2">
             <li>
