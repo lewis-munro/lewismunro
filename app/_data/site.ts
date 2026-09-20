@@ -37,3 +37,8 @@ export const site = {
     "Paper Magazine",
   ],
 };
+
+export const pages = [
+  { href: "/bio", label: "Bio" },
+  { href: "/contact", label: "Contact" },
+];

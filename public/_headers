@@ -1,7 +1,7 @@
 /_next/static/*
   Cache-Control: public,max-age=31536000,immutable
 
-/images/*
+/media/*
   Cache-Control: public,max-age=2592000,stale-while-revalidate=86400
 
 /Lewis-Munro-Signature.gif

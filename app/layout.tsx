@@ -9,7 +9,10 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "Lewis Munro",
+  title: {
+    default: "Lewis Munro",
+    template: "%s — Lewis Munro",
+  },
   description:
     "Lewis Munro is a fashion stylist and consultant, based in London, working internationally with a diverse client base spanning across editorial, commercial, and celebrity projects.",
 };

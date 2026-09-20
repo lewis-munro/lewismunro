@@ -2,48 +2,43 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
-import { site } from "../_data/site";
+import { pages, site } from "../_data/site";
 import {
   isHeroLogoOutOfView,
   isHeroLogoOutOfViewOnServer,
   subscribeToHeroLogo,
 } from "../_lib/heroLogoVisibility";
 import { MenuIcon } from "./Icons";
-import { PanelContent, panelTitles, type PanelName } from "./PanelContent";
 
 const barLayout =
   "flex h-(--header-height) w-full items-center gap-4 px-4 pt-1 font-chroma text-lg uppercase max-2xl:text-2xl-lg max-sm:gap-2 max-sm:px-2 max-sm:text-sm-lg";
 
-const barClasses = `sticky top-0 z-10 justify-between ${barLayout}`;
-
 const easing = "duration-500 ease-[cubic-bezier(.4,0,.2,1)]";
 
-const panelNames: PanelName[] = ["bio", "contact"];
-
 const sheetLink =
-  "inline-block cursor-pointer uppercase transition-[color,translate] duration-300 ease-out hover:translate-x-[.2em] hover:text-ink focus-visible:translate-x-[.2em] focus-visible:text-ink";
+  "inline-block cursor-pointer uppercase transition-[color,translate] duration-300 ease-out hover:translate-x-[.2em] hover:text-ink focus-visible:translate-x-[.2em] focus-visible:text-ink aria-[current=page]:text-ink";
 
 const smallLink = "cursor-pointer uppercase transition-colors duration-300 hover:text-ink focus-visible:text-ink";
 
-export function SiteHeader() {
-  const [panel, setPanel] = useState<PanelName>("bio");
-  const [drawerOpen, setDrawerOpen] = useState(false);
+export function SiteHeader({ alwaysShowLogo = false }: { alwaysShowLogo?: boolean }) {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const showLogo = useSyncExternalStore(subscribeToHeroLogo, isHeroLogoOutOfView, isHeroLogoOutOfViewOnServer);
-
-  const openPanel = (name: PanelName) => {
-    setPanel(name);
-    setMenuOpen(false);
-    setDrawerOpen(true);
-  };
+  const heroLogoOutOfView = useSyncExternalStore(
+    subscribeToHeroLogo,
+    isHeroLogoOutOfView,
+    isHeroLogoOutOfViewOnServer,
+  );
+  const showLogo = alwaysShowLogo || heroLogoOutOfView;
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
       <div className={`pointer-events-none fixed top-0 left-0 z-[11] w-auto ${barLayout}`}>
         <Link
           href="/"
-          aria-current="page"
+          aria-current={pathname === "/" ? "page" : undefined}
           aria-hidden={!showLogo}
           tabIndex={showLogo ? 0 : -1}
           className={`flex transition-[opacity,translate,visibility] ${easing} ${
@@ -70,7 +65,7 @@ export function SiteHeader() {
                 type="button"
                 aria-label="Open menu"
                 aria-expanded={menuOpen}
-                aria-controls="mobile-menu"
+                aria-controls="site-menu"
                 onClick={() => setMenuOpen(true)}
                 className="group flex cursor-pointer items-center"
               >
@@ -85,13 +80,13 @@ export function SiteHeader() {
         type="button"
         aria-label="Close menu"
         tabIndex={-1}
-        onClick={() => setMenuOpen(false)}
+        onClick={closeMenu}
         className={`fixed inset-0 z-30 cursor-pointer bg-ink/40 transition-opacity ${easing} ${
           menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
       <div
-        id="mobile-menu"
+        id="site-menu"
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
@@ -102,16 +97,14 @@ export function SiteHeader() {
       >
         <div className="flex items-center justify-between uppercase">
           <span>Menu</span>
-          <button type="button" onClick={() => setMenuOpen(false)} className={smallLink}>
+          <button type="button" onClick={closeMenu} className={smallLink}>
             Close
           </button>
         </div>
         <ul className="flex flex-col font-chroma text-lg uppercase max-2xl:text-2xl-lg max-sm:text-sm-lg">
-          {panelNames.map((name) => (
-            <li key={name}>
-              <button type="button" onClick={() => openPanel(name)} className={sheetLink}>
-                {panelTitles[name]}
-              </button>
+          {pages.map(({ href, label }) => (
+            <li key={href} className="opacity-60">
+              {label}
             </li>
           ))}
           <li>
@@ -123,25 +116,6 @@ export function SiteHeader() {
         <a href={`mailto:${site.email}`} className={`self-start ${smallLink}`}>
           {site.email}
         </a>
-      </div>
-
-      <div
-        inert={!drawerOpen}
-        className={`fixed top-0 right-0 z-20 h-full w-[calc(50%+.75rem)] overflow-y-scroll bg-accent text-paper transition-[translate,visibility] max-lg:w-full ${easing} ${
-          drawerOpen ? "visible translate-x-0" : "invisible translate-x-full"
-        }`}
-      >
-        <div className={barClasses}>
-          <span>{panelTitles[panel]}</span>
-          <button type="button" onClick={() => setDrawerOpen(false)} className={smallLink}>
-            Close
-          </button>
-        </div>
-        <section className="grid w-full grid-cols-20 gap-4 px-4 max-sm:grid-cols-10 max-sm:gap-2 max-sm:px-2">
-          <div className="col-span-20 flex min-h-[calc(100dvh-5rem)] flex-col gap-4 pt-10 pb-4 font-chroma text-md uppercase max-2xl:text-2xl-md max-sm:col-span-10 max-sm:min-h-[calc(100dvh-4rem)] max-sm:gap-2 max-sm:pb-2 max-sm:text-sm-md">
-            <PanelContent panel={panel} />
-          </div>
-        </section>
       </div>
     </>
   );

@@ -7,6 +7,17 @@
   --color-ink: #141414;
   --color-accent: #2b3cf5;
 
+  --animate-fade-in: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   --text-md: 2rem;
   --text-md--line-height: 0.9;
   --text-md--letter-spacing: -0.015em;
@@ -85,6 +96,22 @@
   @media (max-width: 640px) {
     body {
       font-size: 0.7rem;
+    }
+  }
+}
+
+@layer components {
+  .project-link {
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .project-grid:has(.project-link:focus-visible) .project-link:not(:focus-visible) {
+    opacity: 0.25;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .project-grid:has(.project-link:hover) .project-link:not(:hover) {
+      opacity: 0.25;
     }
   }
 }
