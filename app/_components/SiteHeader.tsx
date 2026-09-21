@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { pages, site } from "../_data/site";
 import { MenuIcon } from "./Icons";
@@ -16,27 +17,27 @@ const sheetLink =
 
 const smallLink = "cursor-pointer uppercase transition-colors duration-300 hover:text-ink focus-visible:text-ink";
 
-export function SiteHeader({ showLogo = false }: { showLogo?: boolean }) {
+export function SiteHeader() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
-      {showLogo && (
-        <div className={`pointer-events-none fixed top-0 left-0 z-[11] w-auto ${barLayout}`}>
-          <Link href="/" className="pointer-events-auto flex">
-            <Image
-              src="/Lewis-Munro-Signature.gif"
-              alt={site.name}
-              width={800}
-              height={150}
-              unoptimized
-              draggable={false}
-              className="h-[.8em] w-auto select-none"
-            />
-          </Link>
-        </div>
-      )}
+      <div className={`pointer-events-none fixed top-0 left-0 z-[11] w-auto ${barLayout}`}>
+        <Link href="/" aria-current={pathname === "/" ? "page" : undefined} className="pointer-events-auto flex">
+          <Image
+            src="/Lewis-Munro-Signature.gif"
+            alt={site.name}
+            width={800}
+            height={150}
+            unoptimized
+            preload
+            draggable={false}
+            className="h-[.8em] w-auto select-none"
+          />
+        </Link>
+      </div>
 
       <header className={`sticky top-0 z-10 justify-end text-white mix-blend-exclusion ${barLayout}`}>
         <nav>

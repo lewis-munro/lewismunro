@@ -39,7 +39,7 @@ export function ProjectsSection() {
       <nav
         ref={navRef}
         aria-label="Filter projects"
-        className="sticky top-0 -mx-4 mb-10 flex min-h-(--header-height) items-center px-4 pt-1 pr-20 max-sm:-mx-2 max-sm:mb-6 max-sm:px-2 max-sm:pr-12"
+        className="sticky top-(--header-height) z-[1] -mx-4 mb-10 flex items-center px-4 max-sm:-mx-2 max-sm:mb-6 max-sm:px-2"
       >
         <ul className="flex flex-wrap gap-x-4 font-chroma text-lg uppercase max-2xl:text-2xl-lg max-sm:gap-x-2 max-sm:text-sm-lg">
           {filters.map(({ value, label }) => (
