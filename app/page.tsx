@@ -7,7 +7,7 @@ export default function Home() {
     <div className="flex min-h-screen w-full flex-col overflow-clip bg-paper">
       <SiteHeader />
       <Hero />
-      <main className="w-full overflow-x-hidden">
+      <main className="relative z-[1] w-full overflow-x-hidden">
         <ProjectsSection />
       </main>
     </div>

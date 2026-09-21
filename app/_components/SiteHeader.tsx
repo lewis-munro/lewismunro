@@ -2,14 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
 import { pages, site } from "../_data/site";
-import {
-  isHeroLogoOutOfView,
-  isHeroLogoOutOfViewOnServer,
-  subscribeToHeroLogo,
-} from "../_lib/heroLogoVisibility";
 import { MenuIcon } from "./Icons";
 
 const barLayout =
@@ -22,40 +16,27 @@ const sheetLink =
 
 const smallLink = "cursor-pointer uppercase transition-colors duration-300 hover:text-ink focus-visible:text-ink";
 
-export function SiteHeader({ alwaysShowLogo = false }: { alwaysShowLogo?: boolean }) {
-  const pathname = usePathname();
+export function SiteHeader({ showLogo = false }: { showLogo?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const heroLogoOutOfView = useSyncExternalStore(
-    subscribeToHeroLogo,
-    isHeroLogoOutOfView,
-    isHeroLogoOutOfViewOnServer,
-  );
-  const showLogo = alwaysShowLogo || heroLogoOutOfView;
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
-      <div className={`pointer-events-none fixed top-0 left-0 z-[11] w-auto ${barLayout}`}>
-        <Link
-          href="/"
-          aria-current={pathname === "/" ? "page" : undefined}
-          aria-hidden={!showLogo}
-          tabIndex={showLogo ? 0 : -1}
-          className={`flex transition-[opacity,translate,visibility] ${easing} ${
-            showLogo ? "pointer-events-auto visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
-          }`}
-        >
-          <Image
-            src="/Lewis-Munro-Signature.gif"
-            alt={site.name}
-            width={800}
-            height={150}
-            unoptimized
-            draggable={false}
-            className="h-[.8em] w-auto select-none"
-          />
-        </Link>
-      </div>
+      {showLogo && (
+        <div className={`pointer-events-none fixed top-0 left-0 z-[11] w-auto ${barLayout}`}>
+          <Link href="/" className="pointer-events-auto flex">
+            <Image
+              src="/Lewis-Munro-Signature.gif"
+              alt={site.name}
+              width={800}
+              height={150}
+              unoptimized
+              draggable={false}
+              className="h-[.8em] w-auto select-none"
+            />
+          </Link>
+        </div>
+      )}
 
       <header className={`sticky top-0 z-10 justify-end text-white mix-blend-exclusion ${barLayout}`}>
         <nav>
