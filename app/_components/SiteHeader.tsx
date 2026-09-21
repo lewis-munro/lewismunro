@@ -85,8 +85,15 @@ export function SiteHeader() {
         </div>
         <ul className="flex flex-col font-chroma text-lg uppercase max-2xl:text-2xl-lg max-sm:text-sm-lg">
           {pages.map(({ href, label }) => (
-            <li key={href} className="opacity-60">
-              {label}
+            <li key={href}>
+              <Link
+                href={href}
+                onClick={closeMenu}
+                aria-current={pathname === href ? "page" : undefined}
+                className={sheetLink}
+              >
+                {label}
+              </Link>
             </li>
           ))}
           <li>

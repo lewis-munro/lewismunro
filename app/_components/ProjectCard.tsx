@@ -1,4 +1,5 @@
-import type { Project } from "../_data/projects";
+import Link from "next/link";
+import { projectHref, type Project } from "../_data/projects";
 import { coverRatio, type Side, type Span } from "../_lib/layoutProjects";
 import { FadeImage } from "./FadeImage";
 import { ProjectLabel } from "./ProjectLabel";
@@ -33,7 +34,7 @@ function ProjectCard({ project, placement, frameRatio }: ProjectCardProps) {
 
   return (
     <div className={placement.className}>
-      <div className="project-link group block">
+      <Link href={projectHref(project)} className="project-link group block outline-none">
         <div style={{ aspectRatio: frameRatio ?? coverRatio(project) }}>
           <FadeImage
             src={cover.src}
@@ -45,7 +46,7 @@ function ProjectCard({ project, placement, frameRatio }: ProjectCardProps) {
           />
         </div>
         <ProjectLabel title={project.title} />
-      </div>
+      </Link>
     </div>
   );
 }
