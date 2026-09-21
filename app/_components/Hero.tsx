@@ -7,7 +7,7 @@ export function Hero() {
       <h1 className="sr-only">{site.name}</h1>
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center px-4 max-sm:px-2"
+        className="pointer-events-none fixed inset-0 -z-10 flex items-center justify-center px-4 max-sm:px-2"
       >
         <Image
           src="/Lewis-Munro-Signature.gif"

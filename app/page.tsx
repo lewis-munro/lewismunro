@@ -4,10 +4,10 @@ import { SiteHeader } from "./_components/SiteHeader";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen w-full flex-col overflow-clip bg-paper">
+    <div className="flex min-h-screen w-full flex-col">
       <SiteHeader />
       <Hero />
-      <main className="relative z-[1] w-full overflow-x-hidden">
+      <main className="w-full">
         <ProjectsSection />
       </main>
     </div>
