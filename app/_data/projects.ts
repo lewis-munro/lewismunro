@@ -175,6 +175,15 @@ export const projects: Project[] = [
   },
 ];
 
+export type MediaItem = ({ kind: "photo" } & Photo) | ({ kind: "film" } & Film);
+
+export function projectMedia(project: Project): MediaItem[] {
+  return [
+    ...project.photos.map((photo) => ({ kind: "photo" as const, ...photo })),
+    ...(project.films ?? []).map((film) => ({ kind: "film" as const, ...film })),
+  ];
+}
+
 export function projectHref(project: Project) {
   return `/projects/${project.slug}`;
 }
