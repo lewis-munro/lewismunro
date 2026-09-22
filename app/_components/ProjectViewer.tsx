@@ -191,7 +191,7 @@ export function ProjectViewer({ project, media, previous, next }: ProjectViewerP
                 className="group flex w-full cursor-pointer flex-col gap-1 text-left"
               >
                 <span
-                  className={`relative block aspect-[4/5] w-full overflow-hidden bg-ink outline-offset-2 outline-paper transition-[outline-width] duration-300 group-hover:outline-2 ${
+                  className={`relative block aspect-4/5 w-full overflow-hidden bg-ink outline-offset-2 outline-paper transition-[outline-width] duration-300 group-hover:outline-2 ${
                     position === index ? "outline-2" : "outline-0"
                   }`}
                 >

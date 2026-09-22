@@ -2,8 +2,7 @@
 
 import { useRef, useState } from "react";
 import { projects, type Category } from "../_data/projects";
-import { layoutProjects } from "../_lib/layoutProjects";
-import { ProjectPair, ProjectSingle } from "./ProjectCard";
+import { ProjectCard } from "./ProjectCard";
 
 type Filter = Category | "all";
 
@@ -18,7 +17,6 @@ export function ProjectsSection() {
   const navRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const visible = filter === "all" ? projects : projects.filter((project) => project.category === filter);
-  const tiles = layoutProjects(visible);
 
   const selectFilter = (value: Filter) => {
     const nav = navRef.current;
@@ -59,15 +57,11 @@ export function ProjectsSection() {
       <div
         ref={gridRef}
         key={filter}
-        className="project-grid grid w-full animate-fade-in grid-cols-20 gap-4 max-sm:grid-cols-10 max-sm:gap-2"
+        className="project-grid grid w-full animate-fade-in grid-cols-3 gap-x-4 gap-y-10 max-sm:grid-cols-2 max-sm:gap-x-2 max-sm:gap-y-6"
       >
-        {tiles.map((tile) =>
-          tile.kind === "pair" ? (
-            <ProjectPair key={tile.projects[0].slug} projects={tile.projects} side={tile.side} />
-          ) : (
-            <ProjectSingle key={tile.project.slug} project={tile.project} span={tile.span} />
-          ),
-        )}
+        {visible.map((project) => (
+          <ProjectCard key={project.slug} project={project} />
+        ))}
       </div>
     </section>
   );
