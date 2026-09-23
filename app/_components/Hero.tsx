@@ -8,7 +8,7 @@ const heroImage = {
 
 export function Hero() {
   return (
-    <section className="relative -mt-(--header-height) h-svh w-full overflow-hidden bg-ink">
+    <section className="relative h-[calc(100svh-var(--header-height))] w-full overflow-hidden bg-ink">
       <h1 className="sr-only">{site.name}</h1>
       <Image
         src={heroImage.src}

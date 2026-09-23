@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useMountEffect } from "../_hooks/useMountEffect";
 import { pages, site } from "../_data/site";
 import { MenuIcon } from "./Icons";
 
@@ -22,6 +23,14 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
+  useMountEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  });
+
   return (
     <>
       <div className={`pointer-events-none fixed top-0 left-0 z-[11] w-auto ${barLayout}`}>
@@ -39,7 +48,7 @@ export function SiteHeader() {
         </Link>
       </div>
 
-      <header className={`sticky top-0 z-10 justify-end text-white mix-blend-exclusion ${barLayout}`}>
+      <header className={`sticky top-0 z-10 justify-end bg-paper ${barLayout}`}>
         <nav>
           <ul className="flex items-center gap-4 max-sm:gap-2">
             <li>
@@ -73,11 +82,11 @@ export function SiteHeader() {
         aria-modal="true"
         aria-label="Menu"
         inert={!menuOpen}
-        className={`fixed inset-x-0 bottom-0 z-30 flex flex-col gap-10 bg-accent px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] text-paper transition-[translate,visibility] max-sm:gap-8 max-sm:px-2 max-sm:pt-2 ${easing} ${
-          menuOpen ? "visible translate-y-0" : "invisible translate-y-full"
+        className={`fixed inset-x-0 top-0 z-30 flex flex-col gap-10 bg-accent px-4 pb-10 text-paper transition-[translate,visibility] max-sm:gap-8 max-sm:px-2 max-sm:pb-6 ${easing} ${
+          menuOpen ? "visible translate-y-0" : "invisible -translate-y-full"
         }`}
       >
-        <div className="flex items-center justify-between uppercase">
+        <div className="flex h-(--header-height) items-center justify-between pt-1 uppercase">
           <span>Menu</span>
           <button type="button" onClick={closeMenu} className={smallLink}>
             Close
